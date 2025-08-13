@@ -1,0 +1,119 @@
+{
+  "persons": [
+    { 
+      "id": 1,
+      "name": "Melong Handy",
+      "email": "handymelong237@gmail.com",
+      "phone": "+237656932636"
+    },
+    { 
+      "id": 2,
+      "name": "Jean-Baptiste Ngassa",
+      "email": "jean.ngassa@example.com",
+      "phone": "+237650112233"
+    },
+    {
+      "id": 3,
+      "name": "Clarisse Tchouamo",
+      "email": "clarisse.tchouamo@example.com",
+      "phone": "+237677445566"
+    },
+    {
+      "id": 4,
+      "name": "Armand Fokou",
+      "email": "armand.fokou@example.com",
+      "phone": "+237690778899"
+    },
+    {
+      "id": 5,
+      "name": "Prisca Noubissi",
+      "email": "prisca.noubissi@example.com",
+      "phone": "+237699887766"
+    },
+    {
+      "id": 6,
+      "name": "Lionel Mbarga",
+      "email": "lionel.mbarga@example.com",
+      "phone": "+237670223344"
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "title": "Développer le module d'authentification",
+      "personId": 1,
+      "startDate": "2025-08-01T09:00:00Z",
+      "endDate": "2025-08-07T17:00:00Z",
+      "priority": "Difficile",
+      "labels": ["NODE JS", "HTML"],
+      "description": "Créer un système de connexion sécurisé avec JWT.",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "title": "Refaire le design de la page d'accueil",
+      "personId": 2,
+      "startDate": "2025-08-05T10:30:00Z",
+      "endDate": "2025-08-09T17:00:00Z",
+      "priority": "Moyen",
+      "labels": ["CSS", "HTML"],
+      "description": "Mettre à jour la page d'accueil en utilisant TailwindCSS et Angular Material.",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "title": "Optimiser les requêtes API",
+      "personId": 3,
+      "startDate": "2025-08-08T14:00:00Z",
+      "endDate": "2025-08-10T17:00:00Z",
+      "priority": "Facile",
+      "labels": ["NODE JS"],
+      "description": "Réduire le temps de réponse en ajoutant de la mise en cache.",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "title": "Ajouter un filtre par catégorie",
+      "personId": 4,
+      "startDate": "2025-08-10T09:45:00Z",
+      "endDate": "2025-08-12T17:00:00Z",
+      "priority": "Facile",
+      "labels": ["HTML", "CSS"],
+      "description": "Permettre à l'utilisateur de filtrer les tâches selon les labels.",
+      "completed": false
+    },
+    {
+      "id": 5,
+      "title": "Corriger les bugs sur mobile",
+      "personId": 5,
+      "startDate": "2025-08-12T16:15:00Z",
+      "endDate": "2025-08-14T17:00:00Z",
+      "priority": "Moyen",
+      "labels": ["HTML", "CSS", "JQUERY"],
+      "description": "Rendre l'application responsive sur les petits écrans.",
+      "completed": false
+    },
+    {
+      "id": 6,
+      "title": "Préparer la documentation technique",
+      "personId": 1,
+      "startDate": "2025-08-15T08:30:00Z",
+      "endDate": "2025-08-16T17:00:00Z",
+      "priority": "Facile",
+      "labels": ["HTML"],
+      "description": "Rédiger la documentation pour l'équipe de maintenance.",
+      "completed": false
+    },
+    {
+      "id": 7,
+      "title": "Réaliser les tests unitaires",
+      "personId": 1,
+      "startDate": "2025-09-15T08:30:00Z",
+      "endDate": "2025-09-16T17:00:00Z",
+      "priority": "Difficile",
+      "labels": ["NODE JS"],
+      "description": "Écrire et exécuter des tests unitaires pour garantir la fiabilité du code.",
+      "completed": false
+    }
+  ]
+}
