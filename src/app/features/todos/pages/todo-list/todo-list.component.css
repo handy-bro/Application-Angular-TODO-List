@@ -1,0 +1,53 @@
+::ng-deep .mat-mdc-menu-panel {
+    background: white !important;
+}
+
+::ng-deep .mat-mdc-menu-content {
+    background: white !important;
+    padding: 0 !important;
+}
+
+.menu-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 8px 16px !important;
+    gap: 8px;
+    background-color: white !important;
+}
+
+.menu-item:hover {
+    background-color: rgb(249 250 251) !important;
+}
+
+::ng-deep .custom-modal {
+  .mat-mdc-dialog-surface {
+    border-radius: 12px;
+    padding: 0;
+  }
+
+  .mdc-notched-outline__notch {
+    border-right: none !important;
+  }
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  textarea.mat-mdc-input-element {
+    line-height: 1.5;
+    padding: 8px 0;
+  }
+
+  .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-wrapper {
+    margin: 0;
+  }
+}
+
+/* Styles pour les champs select et date */
+::ng-deep .mat-mdc-select-panel {
+  border-radius: 8px !important;
+}
+
+::ng-deep .mat-calendar {
+  border-radius: 8px;
+}

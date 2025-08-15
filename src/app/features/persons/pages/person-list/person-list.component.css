@@ -1,0 +1,20 @@
+::ng-deep .mat-mdc-menu-panel {
+    background: white !important;
+}
+
+::ng-deep .mat-mdc-menu-content {
+    background: white !important;
+    padding: 0 !important;
+}
+
+.menu-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 8px 16px !important;
+    gap: 8px;
+    background-color: white !important;
+}
+
+.menu-item:hover {
+    background-color: rgb(249 250 251) !important;
+}

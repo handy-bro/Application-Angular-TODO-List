@@ -7,8 +7,9 @@ export interface Todo {
   title: string;
   person: Person;
   startDate: Date;
-  endDate?: Date;
+  endDate?: Date | null;
   priority: Priority;
   labels: Label[];
   description: string;
+  completed: boolean
 }

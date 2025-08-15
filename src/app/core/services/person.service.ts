@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Person } from '../models/person.model';
 import { environment } from '../../../env/env';
 
@@ -49,6 +49,14 @@ export class PersonService {
         const current = this.personsSubject.value.filter(p => p.id !== id);
         this.personsSubject.next(current);
       })
+    );
+  }
+
+  checkNameExists(name: string): Observable<boolean> {
+    return this.persons$.pipe(
+      map(persons => persons.some(person => 
+        person.name.toLowerCase() === name.toLowerCase()
+      ))
     );
   }
 }

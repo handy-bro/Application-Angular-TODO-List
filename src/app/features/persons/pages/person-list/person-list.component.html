@@ -1,1 +1,209 @@
-<p>person-list works!</p>
+<div class="p-4 min-h-screen bg-gray-50">
+    <div class="flex justify-between items-center mb-4">
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Recherche</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher une personne..." #input>
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="openAddModal()" 
+                class="bg-indigo-600 hover:bg-indigo-700">
+            <mat-icon>person_add</mat-icon>
+            Nouvelle personne
+        </button>
+        
+    </div>
+
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">Liste des personnes</h3>
+
+    <!-- tableau pour desktop -->
+    <div class="hidden md:block mb-16">
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+            <table mat-table [dataSource]="dataSource" matSort class="min-w-full divide-y divide-gray-200 mat-elevation-z8">
+            <!-- ID -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by ID">
+                <div class="flex items-center space-x-1">
+                    <span>ID</span>
+                </div>
+                </th>
+                <td mat-cell *matCellDef="let person">
+                <div class="text-sm font-medium text-gray-900">{{person.id}}</div>
+                </td>
+            </ng-container>
+
+            <!-- Nom -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+                <div class="flex items-center space-x-1">
+                    <span>Name</span>
+                </div>
+                </th>
+                <td mat-cell *matCellDef="let person">
+                <div class="text-sm text-gray-900">{{person.name}}</div>
+                </td>
+            </ng-container>
+
+            <!-- Email -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email">
+                <div class="flex items-center space-x-1">
+                    <span>Email</span>
+                </div>
+                </th>
+                <td mat-cell *matCellDef="let person">
+                <div class="text-sm text-gray-600">{{person.email}}</div>
+                </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let person">
+            <button mat-icon-button [matMenuTriggerFor]="menu" 
+                    class="inline-flex items-center p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openAddModal(person)" class="menu-item">
+                    <mat-icon style="color: #4f46e5">edit</mat-icon>
+                    <span style="color: #4338ca">Modifier</span>
+                </button>
+                
+                <mat-divider></mat-divider>
+                
+                <button mat-menu-item (click)="onDelete(person.id)" class="menu-item">
+                    <mat-icon style="color: #dc2626">delete</mat-icon>
+                    <span style="color: #b91c1c">Supprimer</span>
+                </button>
+            </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+                class="hover:bg-gray-50 transition-colors duration-200"></tr>
+
+            <!-- Aucune donnees -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">Aucun resultat trouvé"{{input.value}}"</td>
+            </tr>
+            </table>
+        </div>
+
+        <mat-paginator class="bg-white rounded-lg shadow mt-4"
+                      [pageSizeOptions]="[10, 25, 100]"
+                      aria-label="Select page of persons">
+        </mat-paginator>
+    </div>
+
+    <!-- cards pour mobile -->
+    <div class="grid grid-cols-1 gap-4 md:hidden pb-20">
+        <mat-card *ngFor="let person of dataSource.filteredData" class="bg-white rounded-lg shadow">
+            <mat-card-content class="p-4 shadow">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="text-lg font-medium text-gray-900">{{person.name}}</h4>
+                        <p class="text-sm text-gray-600 mt-1">{{person.email}}</p>
+                        <p class="text-xs text-gray-500 mt-1">ID: {{person.id}}</p>
+                    </div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" 
+                            class="text-gray-400 hover:text-gray-600">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        
+                        <button mat-menu-item (click)="openAddModal(person)" class="menu-item">
+                            <mat-icon style="color: #4f46e5">edit</mat-icon>
+                            <span style="color: #4338ca">Modifier</span>
+                        </button>
+                        
+                        <mat-divider></mat-divider>
+                        
+                        <button mat-menu-item (click)="onDelete(person.id)" class="menu-item">
+                            <mat-icon style="color: #dc2626">delete</mat-icon>
+                            <span style="color: #b91c1c">Supprimer</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Modal pour ajouter une personne -->
+    <ng-template #addPersonModal>
+        <div class="flex justify-between items-center px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-500">
+            <h2 mat-dialog-title class="text-xl font-semibold text-white m-0 flex items-center gap-2">
+                <mat-icon class="text-white">{{isEditing ? 'edit' : 'person_add'}}</mat-icon>
+                {{isEditing ? 'Modifier la personne' : 'Nouvelle personne'}}
+            </h2>
+            <button mat-icon-button mat-dialog-close class="text-white hover:bg-white/20 transition-colors">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        
+        <mat-dialog-content class="px-8 py-6">
+            <form [formGroup]="personForm" class="flex flex-col gap-6">
+                <!-- Name -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Nom complet</mat-label>
+                    <input matInput formControlName="name" required 
+                           placeholder="Entrez le nom complet"
+                           class="text-lg">
+                    <mat-error *ngIf="personForm.get('name')?.hasError('required')">
+                        Le nom est requis
+                    </mat-error>
+                    <mat-error *ngIf="personForm.get('name')?.hasError('minlength')">
+                        Le nom doit contenir au moins 3 caractères
+                    </mat-error>
+                    <mat-error *ngIf="personForm.get('name')?.hasError('nameExists')">
+                        Ce nom existe déjà
+                    </mat-error>
+                    <mat-progress-spinner *ngIf="personForm.get('name')?.pending"
+                                         diameter="20"
+                                         mode="indeterminate"
+                                         class="inline-block ml-2">
+                    </mat-progress-spinner>
+                </mat-form-field>
+
+                <!-- Email -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required 
+                           type="email"
+                           placeholder="exemple@email.com">
+                    <mat-error *ngIf="personForm.get('email')?.hasError('required')">
+                        L'email est requis
+                    </mat-error>
+                    <mat-error *ngIf="personForm.get('email')?.hasError('email')">
+                        Veuillez entrer un email valide
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Phone -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Téléphone</mat-label>
+                    <input matInput formControlName="phone" required 
+                           placeholder="+237xxxxxxxxx"
+                           type="tel">
+                    <mat-error *ngIf="personForm.get('phone')?.hasError('required')">
+                        Le numéro de téléphone est requis
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-dialog-content>
+        
+        <mat-dialog-actions class="flex justify-end gap-4 px-8 py-6 border-t border-gray-200">
+            <button mat-button (click)="closeModal()" 
+                    class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                Annuler
+            </button>
+            <button mat-raised-button color="primary" 
+                    [disabled]="!personForm.valid"
+                    (click)="submitPerson()"
+                    class="bg-indigo-600 hover:bg-indigo-700 px-6">
+                {{isEditing ? 'Modifier' : 'Ajouter'}}
+            </button>
+        </mat-dialog-actions>
+    </ng-template>
+</div>
