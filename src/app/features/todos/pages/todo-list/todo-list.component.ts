@@ -23,6 +23,10 @@ import { Label } from '../../../../core/enums/label.enum';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PersonService } from '../../../../core/services/person.service';
 import { Person } from '../../../../core/models/person.model';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-todo-list',
@@ -254,4 +258,68 @@ export class TodoListComponent implements OnInit {
       }
     });
   }
+
+  exportToExcel(): void {
+    const dataToExport = this.dataSource.filteredData.map(todo => ({
+      'ID': todo.id,
+      'Titre': todo.title,
+      'Description': todo.description,
+      'Statut': todo.completed ? 'Terminée' : 'En cours',
+      'Date de début': new Date(todo.startDate).toLocaleDateString(),
+      'Date de fin': todo.endDate ? new Date(todo.endDate).toLocaleDateString() : '',
+      'Priorité': todo.priority,
+      'Labels': todo.labels.join(', '),
+      'Assigné à': todo.person?.name
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Tâches');
+    
+    // Générer le fichier Excel
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const fileName = `liste-des-tâches-${new Date().toISOString().split('T')[0]}.xlsx`;
+    saveAs(blob, fileName);
+  }
+
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    
+    // Titre du document
+    doc.setFontSize(16);
+    doc.text('Liste des tâches', 14, 15);
+    
+    // Date d'export
+    doc.setFontSize(10);
+    doc.text(`Exporté le ${new Date().toLocaleDateString()}`, 14, 22);
+
+    const tableData = this.dataSource.filteredData.map(todo => [
+      todo.id.toString(),
+      todo.title,
+      todo.completed ? 'Terminée' : 'En cours',
+      new Date(todo.startDate).toLocaleDateString(),
+      todo.priority,
+      todo.labels.join(', '),
+      todo.person?.name || ''
+    ]);
+
+    autoTable(doc, {
+      head: [['ID', 'Titre', 'Statut', 'Date début', 'Priorité', 'Labels', 'Assigné à']],
+      body: tableData,
+      startY: 30,
+      styles: { fontSize: 8 },
+      headStyles: { 
+        fillColor: [63, 81, 181],
+        textColor: 255 
+      },
+      alternateRowStyles: { 
+        fillColor: [245, 245, 245] 
+      }
+    });
+
+    const fileName = `liste-des-tâches-${new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(fileName);
+  }
 }
+

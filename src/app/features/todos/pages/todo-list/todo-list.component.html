@@ -6,13 +6,31 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" (click)="openAddModal()" 
-                class="bg-indigo-600 hover:bg-indigo-700">
-            <mat-icon>add</mat-icon>
-            Nouvelle tâche
-        </button>
+        <div class="flex items-center gap-4">
+            <div class="flex gap-2">
+                <button mat-stroked-button
+                        (click)="exportToExcel()"
+                        class="border border-green-600 text-green-600 hover:bg-green-50">
+                    <mat-icon class="mr-2">table_view</mat-icon>
+                    Excel
+                </button>
+                <button mat-stroked-button
+                        (click)="exportToPDF()"
+                        class="border border-red-600 text-red-600 hover:bg-red-50">
+                    <mat-icon class="mr-2">picture_as_pdf</mat-icon>
+                    PDF
+                </button>
+            </div>
+
+            <button mat-raised-button color="primary" (click)="openAddModal()" 
+                    class="bg-indigo-600 hover:bg-indigo-700">
+                <mat-icon>add</mat-icon>
+                Nouvelle tâche
+            </button>
+        </div>
     </div>
 
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">Liste des tâche</h3>
     <!-- tableau pour Desktop -->
     <div class="hidden md:block mb-16">
         <div class="overflow-x-auto bg-white rounded-lg shadow">
