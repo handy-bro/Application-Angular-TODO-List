@@ -1,59 +1,131 @@
-# TodoApp
+# 📝 TodoApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+Une application de gestion de tâches moderne construite avec Angular 19 et Material Design.
 
-## Development server
+## ✨ Fonctionnalités
 
-To start a local development server, run:
+- 📋 Gestion complète des tâches (CRUD)
+- 🏷️ Organisation par labels et priorités
+- 👥 Attribution de tâches aux personnes
+- 🔍 Filtrage et recherche avancés
+- 📱 Interface responsive (Desktop & Mobile)
+- 📊 Export des données (Excel & PDF)
+- 🌐 Support multilingue
+- 🎨 Thème Material Design personnalisé
 
+## 🚀 Démarrage rapide
+
+### Prérequis
+
+- Node.js (version 18 ou supérieure)
+- npm (version 9 ou supérieure)
+- Angular CLI (version 19.2.6)
+
+### Installation
+
+1. Clonez le dépôt :
 ```bash
-ng serve
+git clone https://github.com/votre-username/todo-app.git
+cd todo-app
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Installez les dépendances :
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+3. Démarrez le serveur JSON (base de données mock) :
 ```bash
-ng generate --help
+npm run start:database
 ```
 
-## Building
-
-To build the project run:
-
+4. Dans un nouveau terminal, lancez l'application :
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+L'application sera accessible à l'adresse `http://localhost:4200/`
 
-## Running unit tests
+## 🛠️ Technologies utilisées
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Frontend** :
+  - Angular 19
+  - Angular Material
+  - TailwindCSS
+  - RxJS
+  - Transloco (internationalisation)
 
-```bash
-ng test
+- **Backend Mock** :
+  - json-server
+
+- **Outils d'export** :
+  - XLSX (Excel)
+  - jsPDF (PDF)
+
+## 📁 Structure du projet
+
+```
+todo-app/
+├── src/
+│   ├── app/
+│   │   ├── core/           # Services, modèles, guards
+│   │   ├── features/       # Modules fonctionnels
+│   │   ├── shared/         # Composants partagés
+│   │   └── db/            # Base de données mock
+│   ├── assets/            # Images, fonts, etc.
+│   └── environments/      # Configuration par environnement
 ```
 
-## Running end-to-end tests
+## 🔧 Scripts disponibles
 
-For end-to-end (e2e) testing, run:
+- `npm start` : Lance l'application en mode développement
+- `npm run start:database` : Démarre la base de données mock
+- `npm run build` : Compile l'application pour la production
+- `npm test` : Execute les tests unitaires
+- `npm run watch` : Compilation en mode watch
 
-```bash
-ng e2e
-```
+## 📱 Fonctionnalités détaillées
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Gestion des tâches
+- Création, modification et suppression de tâches
+- Attribution de priorités (Facile, Moyen, Difficile)
+- Ajout de labels personnalisés
+- Dates de début et de fin
+- Statut de progression
 
-## Additional Resources
+### Filtrage et recherche
+- Recherche textuelle globale
+- Filtrage par :
+  - Priorité
+  - Labels
+  - Personne assignée
+  - Statut
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Export de données
+- Export Excel avec formatage
+- Export PDF avec mise en page personnalisée
+
+## 🌐 Internationalisation
+
+L'application supporte plusieurs langues :
+- 🇫🇷 Français
+- 🇬🇧 Anglais
+- 🇪🇸 Espagnol
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Créez votre branche (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
+
+## 📝 License
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 📫 Contact
+
+Votre Nom - [@votretwitter](https://twitter.com/votretwitter) - email@example.com
+
+Lien du projet : [https://github.com/votre-username/todo-app](https://github.com/votre-username/todo-app)
