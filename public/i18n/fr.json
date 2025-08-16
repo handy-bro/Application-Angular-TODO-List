@@ -1,0 +1,98 @@
+{
+  "todo": {
+    "title": "Liste des tâches",
+    "addButton": "Nouvelle tâche",
+    "search": "Rechercher une tâche...",
+    "export": {
+      "excel": "Excel",
+      "pdf": "PDF"
+    },
+    "table": {
+      "id": "ID",
+      "title": "Titre",
+      "status": "Statut",
+      "labels": "Labels",
+      "name" : "Nom"
+    },
+    "status": {
+      "completed": "Terminée",
+      "inProgress": "En cours"
+    },
+    "actions": {
+      "detail": "Détail",
+      "edit": "Modifier",
+      "complete": "Terminer",
+      "reopen": "Réouvrir",
+      "delete": "Supprimer"
+    },
+    "form": {
+      "title": "Titre",
+      "titlePlaceholder": "Entrez le titre de la tâche",
+      "startDate": "Date de début",
+      "priority": "Priorité",
+      "labels": "Labels",
+      "assignedTo": "Assigné à",
+      "assignedToPlaceholder": "Choisir une personne",
+      "description": "Description",
+      "descriptionPlaceholder": "Entrez une description détaillée",
+      "cancel": "Annuler",
+      "add": "Ajouter",
+      "modify": "Modifier",
+      "addTitle": "Ajouter une tâche",
+      "editTitle": "Modifier une tâche",
+      "close": "Fermer"
+    },
+    "detail": {
+      "title": "Détails de la tâche",
+      "description": "Description",
+      "noDescription": "Aucune description",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "notCompleted": "Non terminée",
+      "priority": "Priorité",
+      "technology": "Technologie",
+      "assignedTo": "Assigné à",
+      "close": "Fermer"
+    },
+    "validation": {
+      "titleRequired": "Le titre est requis",
+      "startDateRequired": "La date de début est requise"
+    }
+  },
+  "person": {
+    "title": "Liste des personnes",
+    "addButton": "Nouvelle personne",
+    "search": "Rechercher une personne...",
+    "table": {
+      "id": "ID",
+      "name": "Nom",
+      "email": "Email"
+    },
+    "form": {
+      "title": "Nouvelle personne",
+      "editTitle": "Modifier la personne",
+      "name": "Nom complet",
+      "namePlaceholder": "Entrez le nom complet",
+      "email": "Email",
+      "emailPlaceholder": "exemple@email.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+237xxxxxxxxx",
+      "cancel": "Annuler",
+      "add": "Ajouter",
+      "modify": "Modifier"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "validation": {
+      "nameRequired": "Le nom est requis",
+      "nameMinLength": "Le nom doit contenir au moins 3 caractères",
+      "nameExists": "Ce nom existe déjà",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Veuillez entrer un email valide",
+      "phoneRequired": "Le numéro de téléphone est requis"
+    },
+    "noResult": "Aucun resultat trouvé"
+  }
+}

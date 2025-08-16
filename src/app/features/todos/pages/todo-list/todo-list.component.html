@@ -1,8 +1,8 @@
 <div class="p-4 min-h-screen bg-gray-50">
     <div class="flex justify-between items-center mb-4">
         <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Recherche</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher une tâche..." #input>
+            <mat-label>{{ 'todo.search' | transloco }}</mat-label>
+            <input matInput (keyup)="applyFilter($event)" [placeholder]="'todo.search' | transloco" #input>
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
@@ -12,34 +12,35 @@
                         (click)="exportToExcel()"
                         class="border border-green-600 text-green-600 hover:bg-green-50">
                     <mat-icon class="mr-2">table_view</mat-icon>
-                    Excel
+                    {{ 'todo.export.excel' | transloco }}
                 </button>
                 <button mat-stroked-button
                         (click)="exportToPDF()"
                         class="border border-red-600 text-red-600 hover:bg-red-50">
                     <mat-icon class="mr-2">picture_as_pdf</mat-icon>
-                    PDF
+                    {{ 'todo.export.pdf' | transloco }}
                 </button>
             </div>
 
             <button mat-raised-button color="primary" (click)="openAddModal()" 
                     class="bg-indigo-600 hover:bg-indigo-700">
                 <mat-icon>add</mat-icon>
-                Nouvelle tâche
+                {{ 'todo.addButton' | transloco }}
             </button>
         </div>
     </div>
 
-    <h3 class="text-2xl font-bold text-gray-900 mb-4">Liste des tâche</h3>
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+        {{'todo.title' | transloco}}</h3>
     <!-- tableau pour Desktop -->
     <div class="hidden md:block mb-16">
         <div class="overflow-x-auto bg-white rounded-lg shadow">
             <table mat-table [dataSource]="dataSource" matSort class="min-w-full divide-y divide-gray-200 mat-elevation-z8">
-                <!-- ID -->
+                <!-- ID Column -->
                 <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by ID">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         <div class="flex items-center space-x-1">
-                            <span>ID</span>
+                            <span>{{ 'todo.table.id' | transloco }}</span>
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let todo">
@@ -47,11 +48,11 @@
                     </td>
                 </ng-container>
 
-                <!-- Titre -->
+                <!-- Title Column -->
                 <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         <div class="flex items-center space-x-1">
-                            <span>Titre</span>
+                            <span>{{ 'todo.table.title' | transloco }}</span>
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let todo">
@@ -59,16 +60,16 @@
                     </td>
                 </ng-container>
 
-                <!-- Complet -->
+                <!-- Status Column -->
                 <ng-container matColumnDef="completed">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         <div class="flex items-center space-x-1">
-                            <span>Statut</span>
+                            <span>{{ 'todo.table.status' | transloco }}</span>
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let todo">
                         <div class="text-sm" [ngClass]="todo.completed ? 'text-green-600' : 'text-orange-600'">
-                            {{todo.completed ? 'Terminée' : 'En cours'}}
+                            {{ todo.completed ? ('todo.status.completed' | transloco) : ('todo.status.inProgress' | transloco) }}
                         </div>
                     </td>
                 </ng-container>
@@ -107,12 +108,12 @@
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="openDetailModal(todo.id)" class="menu-item">
                                 <mat-icon style="color: #2563eb">visibility</mat-icon>
-                                <span style="color: #1d4ed8">Detail</span>
+                                <span style="color: #1d4ed8">{{ 'todo.actions.detail' | transloco }}</span>
                             </button>
                             
                             <button mat-menu-item (click)="openAddModal(todo)" class="menu-item">
                                 <mat-icon style="color: #4f46e5">edit</mat-icon>
-                                <span style="color: #4338ca">Modifier</span>
+                                <span style="color: #4338ca">{{ 'todo.actions.edit' | transloco }}</span>
                             </button>
                             
                             <button mat-menu-item (click)="onComplete(todo)" class="menu-item">
@@ -120,15 +121,13 @@
                                     {{todo.completed ? 'restart_alt' : 'check_circle'}}
                                 </mat-icon>
                                 <span [style.color]="todo.completed ? '#b91c1c' : '#15803d'">
-                                    {{todo.completed ? 'Réouvrir' : 'Terminer'}}
+                                    {{todo.completed ? ('todo.actions.reopen' | transloco) : ('todo.actions.complete' | transloco)}}
                                 </span>
                             </button>
                             
-                            <mat-divider></mat-divider>
-                            
                             <button mat-menu-item (click)="onDelete(todo.id)" class="menu-item">
                                 <mat-icon style="color: #dc2626">delete</mat-icon>
-                                <span style="color: #b91c1c">Supprimer</span>
+                                <span style="color: #b91c1c">{{ 'todo.actions.delete' | transloco }}</span>
                             </button>
                         </mat-menu>
                     </td>
@@ -164,7 +163,7 @@
                              [ngClass]="todo.completed ? 'bg-blue-50 text-blue-700' : 'bg-gray-50 text-gray-700'">
                             <span class="flex items-center gap-1">
                                 <mat-icon class="text-sm">{{todo.completed ? 'check_circle' : 'schedule'}}</mat-icon>
-                                {{todo.completed ? 'Terminée' : 'En cours'}}
+                                {{ todo.completed ? ('todo.status.completed' | transloco) : ('todo.status.inProgress' | transloco) }}
                             </span>
                         </div>
                     </div>
@@ -203,12 +202,12 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="openDetailModal(todo.id)" class="menu-item">
                     <mat-icon class="text-gray-600">visibility</mat-icon>
-                    <span class="text-gray-700">Détail</span>
+                    <span class="text-gray-700">{{ 'todo.actions.detail' | transloco }}</span>
                 </button>
                 
                 <button mat-menu-item (click)="onUpdate(todo)" class="menu-item">
                     <mat-icon class="text-gray-600">edit</mat-icon>
-                    <span class="text-gray-700">Modifier</span>
+                    <span class="text-gray-700">{{ 'todo.actions.edit' | transloco }}</span>
                 </button>
                 
                 <button mat-menu-item (click)="onComplete(todo)" class="menu-item">
@@ -216,7 +215,7 @@
                         {{todo.completed ? 'restart_alt' : 'check_circle'}}
                     </mat-icon>
                     <span class="text-gray-700">
-                        {{todo.completed ? 'Réouvrir' : 'Terminer'}}
+                        {{todo.completed ? ('todo.actions.reopen' | transloco) : ('todo.actions.complete' | transloco)}}
                     </span>
                 </button>
                 
@@ -224,7 +223,7 @@
                 
                 <button mat-menu-item (click)="onDelete(todo.id)" class="menu-item">
                     <mat-icon class="text-gray-600">delete</mat-icon>
-                    <span class="text-gray-700">Supprimer</span>
+                    <span class="text-gray-700">{{ 'todo.actions.delete' | transloco }}</span>
                 </button>
             </mat-menu>
         </mat-card>
@@ -236,7 +235,7 @@
     <div class="flex justify-between items-center px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-500">
         <h2 mat-dialog-title class="text-xl font-semibold text-white m-0 flex items-center gap-2">
             <mat-icon class="text-white">{{isEditing ? 'edit' : 'add_task'}}</mat-icon>
-            {{isEditing ? 'Modifier la tâche' : 'Nouvelle tâche'}}
+            {{isEditing ? ('todo.form.editTitle' | transloco) : ('todo.form.addTitle' | transloco)}}
         </h2>
         <button mat-icon-button mat-dialog-close class="text-white hover:bg-white/20 transition-colors">
             <mat-icon>close</mat-icon>
@@ -245,35 +244,35 @@
     
     <mat-dialog-content class="px-20">
         <form [formGroup]="todoForm" class="flex flex-col gap-6">
-            <!-- titre -->
+            <!-- Title -->
             <mat-form-field appearance="outline">
-                <mat-label>Titre</mat-label>
+                <mat-label>{{ 'todo.form.title' | transloco }}</mat-label>
                 <input matInput formControlName="title" required 
-                       placeholder="Entrez le titre de la tâche"
+                       [placeholder]="'todo.form.titlePlaceholder' | transloco"
                        class="text-lg">
                 <mat-error *ngIf="todoForm.get('title')?.hasError('required')">
-                    <span class="text-red-500">Le titre est requis</span>
+                    {{ 'todo.validation.titleRequired' | transloco }}
                 </mat-error>
             </mat-form-field>
 
-            <!-- Date et Priority -->
+            <!-- Start Date and Priority -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>Date de début</mat-label>
+                    <mat-label>{{ 'todo.form.startDate' | transloco }}</mat-label>
                     <input matInput [matDatepicker]="startPicker" formControlName="startDate" required>
                     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                     <mat-datepicker #startPicker></mat-datepicker>
                     <mat-error *ngIf="todoForm.get('startDate')?.hasError('required')">
-                        La date de début est requise
+                        {{ 'todo.validation.startDateRequired' | transloco }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label>Priorité</mat-label>
+                    <mat-label>{{ 'todo.form.priority' | transloco }}</mat-label>
                     <mat-select formControlName="priority" required>
                         <mat-option *ngFor="let priority of priorities" [value]="priority"
                                   class="py-2">
-                            {{priority}}
+                            {{ priority }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -281,23 +280,23 @@
 
             <!-- Labels -->
             <mat-form-field appearance="outline">
-                <mat-label>Labels</mat-label>
+                <mat-label>{{ 'todo.form.labels' | transloco }}</mat-label>
                 <mat-select formControlName="labels" multiple>
                     <mat-option *ngFor="let label of labels" [value]="label"
                               class="py-2">
-                        {{label}}
+                        {{ label }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <!-- personne Assignee -->
+            <!-- Assigned Person -->
             <mat-form-field appearance="outline">
-                <mat-label>Assigné à</mat-label>
+                <mat-label>{{ 'todo.form.assignedTo' | transloco }}</mat-label>
                 <input type="text"
                        matInput
                        formControlName="person"
                        [matAutocomplete]="auto"
-                       placeholder="Choisir une personne">
+                       [placeholder]="'todo.form.assignedToPlaceholder' | transloco">
                 <mat-autocomplete #auto="matAutocomplete"
                                  [displayWith]="displayPersonFn">
                     <mat-option *ngFor="let person of filteredPersons$ | async" 
@@ -316,10 +315,10 @@
 
             <!-- Description -->
             <mat-form-field appearance="outline">
-                <mat-label>Description</mat-label>
+                <mat-label>{{ 'todo.form.description' | transloco }}</mat-label>
                 <textarea matInput formControlName="description" 
                           rows="5" 
-                          placeholder="Entrez une description détaillée"
+                          [placeholder]="'todo.form.descriptionPlaceholder' | transloco"
                           class="resize-none text-base leading-relaxed"></textarea>
             </mat-form-field>
         </form>
@@ -328,120 +327,120 @@
     <mat-dialog-actions class="flex justify-end gap-4 px-8 py-6 border-t border-gray-200">
         <button mat-button mat-dialog-close 
                 class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-            Annuler
+            {{ 'todo.form.cancel' | transloco }}
         </button>
         <button mat-raised-button color="primary" 
                 [disabled]="!todoForm.valid"
                 (click)="submitTodo()"
                 class="bg-indigo-600 hover:bg-indigo-700 px-6">
-            {{isEditing ? 'Modifier' : 'Ajouter'}}
+            {{isEditing ? ('todo.form.modify' | transloco) : ('todo.form.add' | transloco)}}
         </button>
     </mat-dialog-actions>
 </ng-template>
 
 <!-- Detail Modal -->
 <ng-template #detailModal let-data>
-  <div class="flex justify-between items-center px-8 py-6 border-b border-gray-200 bg-blue-500">
-    <h2 mat-dialog-title class="text-xl font-semibold text-white m-0 flex items-center gap-2">
-      Détails de la tâche
-    </h2>
-    <button mat-icon-button mat-dialog-close class="text-white hover:bg-white/20 transition-colors">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-
-  <mat-dialog-content class="px-8 py-6 space-y-6">
-    <!-- Titre et Statut -->
-    <div class="flex justify-between items-start bg-gray-100 shadow p-4">
-      <div class="space-y-1">
-        <h3 class="text-2xl font-medium text-gray-900">{{ data.title }}</h3>
-        <p class="text-gray-500">ID: #{{ data.id }}</p>
-      </div>
-      <div class="flex items-center w-25 gap-2 px-3 py-1.5 rounded-full" 
-           [ngClass]="data.completed ? 'bg-green-100' : 'bg-orange-100'">
-        <span class="text-sm font-medium"
-              [ngClass]="data.completed ? 'text-green-700' : 'text-orange-700'">
-          {{ data.completed ? 'Terminée' : 'En cours' }}
-        </span>
-      </div>
+    <div class="flex justify-between items-center px-8 py-6 border-b border-gray-200 bg-blue-500">
+        <h2 mat-dialog-title class="text-xl font-semibold text-white m-0 flex items-center gap-2">
+            {{ 'todo.detail.title' | transloco }}
+        </h2>
+        <button mat-icon-button mat-dialog-close class="text-white hover:bg-white/20 transition-colors">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
 
-    <!-- Description -->
-    <div class="bg-gray-50 rounded-lg p-4 border border-gray-100 shadow">
-      <h4 class="text-sm font-medium text-gray-700 mb-2">Description</h4>
-      <p class="text-gray-600 whitespace-pre-line">{{ data.description || 'Aucune description' }}</p>
-    </div>
-
-    <!-- Dates et Priorité -->
-    <div class="grid grid-cols-3 gap-6 bg-gray-100 shadow p-4">
-      <div class="p-4 rounded-lg">
-        <span class="text-sm font-medium text-blue-700 block mb-1">Date de début</span>
-        <p class="text-blue-900">{{ data.startDate | date: 'dd MMM yyyy' }}</p>
-      </div>
-      <div class="p-4 rounded-lg">
-        <span class="text-sm font-medium text-purple-700 block mb-1">Date de fin</span>
-        <p class="text-purple-900">
-            {{ data.completed ? (data.endDate | date: 'dd MMM yyyy') : 'Non terminée' }}
-        </p>
-      </div>
-      <div class="p-4 rounded-lg">
-        <span class="text-sm font-medium text-amber-700 block mb-1">Priorité</span>
-        <p class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium"
-           [ngClass]="{
-             'bg-red-100 text-red-800': data.priority === 'Difficile',
-             'bg-yellow-100 text-yellow-800': data.priority === 'Moyen',
-             'bg-green-100 text-green-800': data.priority === 'Facile'
-           }">
-          {{ data.priority }}
-        </p>
-      </div>
-    </div>
-
-    <!-- Labels -->
-    <div class="shadow bg-gray-100 p-4">
-      <h4 class="text-sm font-medium text-gray-700 mb-3">Technologie</h4>
-      <div class="flex flex-wrap gap-2">
-        <span *ngFor="let label of data.labels" 
-              class="px-3 py-1.5 text-sm font-medium rounded-full flex items-center gap-1.5"
-              [ngClass]="{
-                'bg-blue-100 text-blue-800': label === 'HTML',
-                'bg-purple-100 text-purple-800': label === 'CSS',
-                'bg-green-100 text-green-800': label === 'NODE JS',
-                'bg-yellow-100 text-yellow-800': label === 'JQUERY'
-              }">
-          <span class="w-2 h-2 rounded-full" 
-                [ngClass]="{
-                  'bg-blue-500': label === 'HTML',
-                  'bg-purple-500': label === 'CSS',
-                  'bg-green-500': label === 'NODE JS',
-                  'bg-yellow-500': label === 'JQUERY'
-                }"></span>
-          {{ label }}
-        </span>
-      </div>
-    </div>
-
-    <!-- Assigné à -->
-    <div class="bg-white rounded-lg border border-gray-100 p-4 shadow">
-      <h4 class="text-sm font-medium text-gray-700 mb-3">Assigné à</h4>
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
-          <span class="text-indigo-600 font-medium text-lg">
-            {{ data.person?.name.charAt(0) }}
-          </span>
+    <mat-dialog-content class="px-8 py-6 space-y-6">
+        <!-- Titre et Statut -->
+        <div class="flex justify-between items-start bg-gray-100 shadow p-4">
+          <div class="space-y-1">
+            <h3 class="text-2xl font-medium text-gray-900">{{ data.title }}</h3>
+            <p class="text-gray-500">ID: #{{ data.id }}</p>
+          </div>
+          <div class="flex items-center w-25 gap-2 px-3 py-1.5 rounded-full" 
+               [ngClass]="data.completed ? 'bg-green-100' : 'bg-orange-100'">
+            <span class="text-sm font-medium"
+                  [ngClass]="data.completed ? 'text-green-700' : 'text-orange-700'">
+              {{ data.completed ? 'Terminée' : 'En cours' }}
+            </span>
+          </div>
         </div>
-        <div>
-          <p class="text-gray-900 font-medium">{{ data.person?.name }}</p>
-          <p class="text-gray-500 text-sm">{{ data.person?.email }}</p>
-        </div>
-      </div>
-    </div>
-  </mat-dialog-content>
 
-  <mat-dialog-actions class="flex justify-end gap-4 px-8 py-6 border-t border-gray-200 mt-2">
-    <button mat-button mat-dialog-close 
-            class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-      Fermer
-    </button>
-  </mat-dialog-actions>
+        <!-- Description -->
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100 shadow">
+          <h4 class="text-sm font-medium text-gray-700 mb-2">Description</h4>
+          <p class="text-gray-600 whitespace-pre-line">{{ data.description || 'Aucune description' }}</p>
+        </div>
+
+        <!-- Dates et Priorité -->
+        <div class="grid grid-cols-3 gap-6 bg-gray-100 shadow p-4">
+          <div class="p-4 rounded-lg">
+            <span class="text-sm font-medium text-blue-700 block mb-1">{{ 'todo.detail.startDate' | transloco }}</span>
+            <p class="text-blue-900">{{ data.startDate | date: 'dd MMM yyyy' }}</p>
+          </div>
+          <div class="p-4 rounded-lg">
+            <span class="text-sm font-medium text-purple-700 block mb-1">{{ 'todo.detail.endDate' | transloco }}</span>
+            <p class="text-purple-900">
+                {{ data.completed ? (data.endDate | date: 'dd MMM yyyy') : 'Non terminée' }}
+            </p>
+          </div>
+          <div class="p-4 rounded-lg">
+            <span class="text-sm font-medium text-amber-700 block mb-1">{{ 'todo.detail.priority' | transloco }}</span>
+            <p class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium"
+               [ngClass]="{
+                 'bg-red-100 text-red-800': data.priority === 'Difficile',
+                 'bg-yellow-100 text-yellow-800': data.priority === 'Moyen',
+                 'bg-green-100 text-green-800': data.priority === 'Facile'
+               }">
+              {{ data.priority }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Labels -->
+        <div class="shadow bg-gray-100 p-4">
+          <h4 class="text-sm font-medium text-gray-700 mb-3">{{ 'todo.detail.technology' | transloco }}</h4>
+          <div class="flex flex-wrap gap-2">
+            <span *ngFor="let label of data.labels" 
+                  class="px-3 py-1.5 text-sm font-medium rounded-full flex items-center gap-1.5"
+                  [ngClass]="{
+                    'bg-blue-100 text-blue-800': label === 'HTML',
+                    'bg-purple-100 text-purple-800': label === 'CSS',
+                    'bg-green-100 text-green-800': label === 'NODE JS',
+                    'bg-yellow-100 text-yellow-800': label === 'JQUERY'
+                  }">
+              <span class="w-2 h-2 rounded-full" 
+                    [ngClass]="{
+                      'bg-blue-500': label === 'HTML',
+                      'bg-purple-500': label === 'CSS',
+                      'bg-green-500': label === 'NODE JS',
+                      'bg-yellow-500': label === 'JQUERY'
+                    }"></span>
+              {{ label }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Assigné à -->
+        <div class="bg-white rounded-lg border border-gray-100 p-4 shadow">
+          <h4 class="text-sm font-medium text-gray-700 mb-3">{{ 'todo.detail.assignedTo' | transloco }}</h4>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
+              <span class="text-indigo-600 font-medium text-lg">
+                {{ data.person?.name.charAt(0) }}
+              </span>
+            </div>
+            <div>
+              <p class="text-gray-900 font-medium">{{ data.person?.name }}</p>
+              <p class="text-gray-500 text-sm">{{ data.person?.email }}</p>
+            </div>
+          </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="flex justify-end gap-4 px-8 py-6 border-t border-gray-200 mt-2">
+        <button mat-button mat-dialog-close 
+                class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+            {{ 'todo.form.close' | transloco }}
+        </button>
+    </mat-dialog-actions>
 </ng-template>

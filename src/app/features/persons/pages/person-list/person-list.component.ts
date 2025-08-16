@@ -16,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-person-list',
@@ -37,8 +38,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatCardModule,
     MatDialogModule,
     MatButtonModule,
-    MatProgressSpinnerModule
-
+    MatProgressSpinnerModule,
+    TranslocoModule
   ],
   templateUrl: './person-list.component.html',
   styleUrl: './person-list.component.css',
@@ -51,6 +52,7 @@ export class PersonListComponent implements OnInit {
   private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
   private readonly personService = inject(PersonService);
+  private translocoService = inject(TranslocoService);
   persons$: Observable<Person[]> = this.personService.persons$;
   
   displayedColumns: string[] = ['id', 'name', 'email', 'actions'];

@@ -27,6 +27,7 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { saveAs } from 'file-saver';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-todo-list',
@@ -52,7 +53,8 @@ import { saveAs } from 'file-saver';
     ReactiveFormsModule,
     MatDialogModule,
     MatLabel,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    TranslocoModule
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',

@@ -1,0 +1,99 @@
+{
+  "todo": {
+    "title": "Task List",
+    "addButton": "New Task",
+    "search": "Search a task...",
+    "export": {
+      "excel": "Excel",
+      "pdf": "PDF"
+    },
+    "table": {
+      "id": "ID",
+      "title": "Title",
+      "status": "Status",
+      "labels": "Labels",
+      "name" : "Name"
+    },
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In Progress"
+    },
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "complete": "Complete",
+      "reopen": "Reopen",
+      "delete": "Delete"
+    },
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "Enter task title",
+      "startDate": "Start Date",
+      "priority": "Priority",
+      "labels": "Labels",
+      "assignedTo": "Assigned to",
+      "assignedToPlaceholder": "Choose a person",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a detailed description",
+      "cancel": "Cancel",
+      "add": "Add",
+      "modify": "Modify",
+      "addTitle": "Add a tast",
+      "editTitle": "Edit task",
+      "close": "Close"
+    },
+
+    "detail": {
+      "title": "Task details",
+      "description": "Description",
+      "noDescription": "No description",
+      "startDate": "Starting date",
+      "endDate": "Ending date",
+      "notCompleted": "Not finished",
+      "priority": "Priority",
+      "technology": "Technology",
+      "assignedTo": "Assigned to",
+      "close": "Close"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "startDateRequired": "Starting date is required"
+    }
+  },
+  "person": {
+    "title": "People List",
+    "addButton": "New Person",
+    "search": "Search for a person...",
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email"
+    },
+    "form": {
+      "title": "New Person",
+      "editTitle": "Edit Person",
+      "name": "Full Name",
+      "namePlaceholder": "Enter full name",
+      "email": "Email",
+      "emailPlaceholder": "example@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+237xxxxxxxxx",
+      "cancel": "Cancel",
+      "add": "Add",
+      "modify": "Modify"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 3 characters long",
+      "nameExists": "This name already exists",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "phoneRequired": "Phone number is required"
+    },
+    "noResult": "No result found  "
+  }
+}

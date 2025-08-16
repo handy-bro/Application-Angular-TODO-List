@@ -1,20 +1,19 @@
 <div class="p-4 min-h-screen bg-gray-50">
     <div class="flex justify-between items-center mb-4">
         <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Recherche</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher une personne..." #input>
+            <mat-label>{{ 'person.search' | transloco }}</mat-label>
+            <input matInput (keyup)="applyFilter($event)" [placeholder]="'person.search' | transloco" #input>
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="openAddModal()" 
                 class="bg-indigo-600 hover:bg-indigo-700">
             <mat-icon>person_add</mat-icon>
-            Nouvelle personne
+            {{ 'person.addButton' | transloco }}
         </button>
-        
     </div>
 
-    <h3 class="text-2xl font-bold text-gray-900 mb-4">Liste des personnes</h3>
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ 'person.title' | transloco }}</h3>
 
     <!-- tableau pour desktop -->
     <div class="hidden md:block mb-16">
@@ -36,7 +35,7 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
                 <div class="flex items-center space-x-1">
-                    <span>Name</span>
+                    <span> {{ 'person.table.name' | transloco }} </span>
                 </div>
                 </th>
                 <td mat-cell *matCellDef="let person">
@@ -67,14 +66,14 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="openAddModal(person)" class="menu-item">
                     <mat-icon style="color: #4f46e5">edit</mat-icon>
-                    <span style="color: #4338ca">Modifier</span>
+                    <span style="color: #4338ca">{{'person.actions.edit' | transloco}}</span>
                 </button>
                 
                 <mat-divider></mat-divider>
                 
                 <button mat-menu-item (click)="onDelete(person.id)" class="menu-item">
                     <mat-icon style="color: #dc2626">delete</mat-icon>
-                    <span style="color: #b91c1c">Supprimer</span>
+                    <span style="color: #b91c1c">{{'person.actions.delete' | transloco}}</span>
                 </button>
             </mat-menu>
                 </td>
@@ -86,7 +85,7 @@
 
             <!-- Aucune donnees -->
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">Aucun resultat trouvé"{{input.value}}"</td>
+                <td class="mat-cell" colspan="4">{{'person.noResult' | transloco}}"{{input.value}}"</td>
             </tr>
             </table>
         </div>
@@ -115,14 +114,14 @@
                         
                         <button mat-menu-item (click)="openAddModal(person)" class="menu-item">
                             <mat-icon style="color: #4f46e5">edit</mat-icon>
-                            <span style="color: #4338ca">Modifier</span>
+                            <span style="color: #4338ca">{{'person.actions.edit' | transloco}}</span>
                         </button>
                         
                         <mat-divider></mat-divider>
                         
                         <button mat-menu-item (click)="onDelete(person.id)" class="menu-item">
                             <mat-icon style="color: #dc2626">delete</mat-icon>
-                            <span style="color: #b91c1c">Supprimer</span>
+                            <span style="color: #b91c1c">{{'person.actions.delete' | transloco}}</span>
                         </button>
                     </mat-menu>
                 </div>
@@ -135,7 +134,7 @@
         <div class="flex justify-between items-center px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-500">
             <h2 mat-dialog-title class="text-xl font-semibold text-white m-0 flex items-center gap-2">
                 <mat-icon class="text-white">{{isEditing ? 'edit' : 'person_add'}}</mat-icon>
-                {{isEditing ? 'Modifier la personne' : 'Nouvelle personne'}}
+                {{isEditing ? ('person.form.editTitle' | transloco) : ('person.form.title' | transloco)}}
             </h2>
             <button mat-icon-button mat-dialog-close class="text-white hover:bg-white/20 transition-colors">
                 <mat-icon>close</mat-icon>
@@ -146,18 +145,18 @@
             <form [formGroup]="personForm" class="flex flex-col gap-6">
                 <!-- Name -->
                 <mat-form-field appearance="outline">
-                    <mat-label>Nom complet</mat-label>
+                    <mat-label>{{ 'person.form.name' | transloco }}</mat-label>
                     <input matInput formControlName="name" required 
-                           placeholder="Entrez le nom complet"
+                           [placeholder]="'person.form.namePlaceholder' | transloco"
                            class="text-lg">
                     <mat-error *ngIf="personForm.get('name')?.hasError('required')">
-                        Le nom est requis
+                        {{ 'person.validation.nameRequired' | transloco }}
                     </mat-error>
                     <mat-error *ngIf="personForm.get('name')?.hasError('minlength')">
-                        Le nom doit contenir au moins 3 caractères
+                        {{ 'person.validation.nameMinLength' | transloco }}
                     </mat-error>
                     <mat-error *ngIf="personForm.get('name')?.hasError('nameExists')">
-                        Ce nom existe déjà
+                        {{ 'person.validation.nameExists' | transloco }}
                     </mat-error>
                     <mat-progress-spinner *ngIf="personForm.get('name')?.pending"
                                          diameter="20"
@@ -168,26 +167,26 @@
 
                 <!-- Email -->
                 <mat-form-field appearance="outline">
-                    <mat-label>Email</mat-label>
+                    <mat-label>{{ 'person.form.email' | transloco }}</mat-label>
                     <input matInput formControlName="email" required 
                            type="email"
-                           placeholder="exemple@email.com">
+                           [placeholder]="'person.form.emailPlaceholder' | transloco">
                     <mat-error *ngIf="personForm.get('email')?.hasError('required')">
-                        L'email est requis
+                        {{ 'person.validation.emailRequired' | transloco }}
                     </mat-error>
                     <mat-error *ngIf="personForm.get('email')?.hasError('email')">
-                        Veuillez entrer un email valide
+                        {{ 'person.validation.emailInvalid' | transloco }}
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Phone -->
                 <mat-form-field appearance="outline">
-                    <mat-label>Téléphone</mat-label>
+                    <mat-label>{{ 'person.form.phone' | transloco }}</mat-label>
                     <input matInput formControlName="phone" required 
-                           placeholder="+237xxxxxxxxx"
+                           [placeholder]="'person.form.phonePlaceholder' | transloco"
                            type="tel">
                     <mat-error *ngIf="personForm.get('phone')?.hasError('required')">
-                        Le numéro de téléphone est requis
+                        {{ 'person.validation.phoneRequired' | transloco }}
                     </mat-error>
                 </mat-form-field>
             </form>
@@ -196,13 +195,13 @@
         <mat-dialog-actions class="flex justify-end gap-4 px-8 py-6 border-t border-gray-200">
             <button mat-button (click)="closeModal()" 
                     class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                Annuler
+                {{ 'person.form.cancel' | transloco }}
             </button>
             <button mat-raised-button color="primary" 
                     [disabled]="!personForm.valid"
                     (click)="submitPerson()"
                     class="bg-indigo-600 hover:bg-indigo-700 px-6">
-                {{isEditing ? 'Modifier' : 'Ajouter'}}
+                {{isEditing ? ('person.form.modify' | transloco) : ('person.form.add' | transloco)}}
             </button>
         </mat-dialog-actions>
     </ng-template>
