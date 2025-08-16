@@ -1,37 +1,76 @@
 <div class="p-4 min-h-screen bg-gray-50">
-    <div class="flex justify-between items-center mb-4">
-        <mat-form-field appearance="outline" class="search-field">
-            <mat-label>{{ 'todo.search' | transloco }}</mat-label>
-            <input matInput (keyup)="applyFilter($event)" [placeholder]="'todo.search' | transloco" #input>
-            <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+    <!-- En-tête avec titre et bouton d'ajout -->
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-gray-900">
+            {{'todo.title' | transloco}}
+        </h3>
+        <button mat-raised-button color="primary" (click)="openAddModal()" 
+                class="bg-indigo-600 hover:bg-indigo-700 text-lg px-6 py-2 flex items-center gap-2 shadow-lg transform hover:scale-105 transition-all">
+            <mat-icon>add</mat-icon>
+            {{ 'todo.addButton' | transloco }}
+        </button>
+    </div>
 
-        <div class="flex items-center gap-4">
-            <div class="flex gap-2">
-                <button mat-stroked-button
-                        (click)="exportToExcel()"
-                        class="border border-green-600 text-green-600 hover:bg-green-50">
-                    <mat-icon class="mr-2">table_view</mat-icon>
-                    {{ 'todo.export.excel' | transloco }}
-                </button>
-                <button mat-stroked-button
-                        (click)="exportToPDF()"
-                        class="border border-red-600 text-red-600 hover:bg-red-50">
-                    <mat-icon class="mr-2">picture_as_pdf</mat-icon>
-                    {{ 'todo.export.pdf' | transloco }}
-                </button>
+    <!-- Barre de filtres -->
+    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div class="grid grid-cols-1 gap-4">
+            <!-- Recherche -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ 'todo.search' | transloco }}</mat-label>
+                <input matInput (keyup)="applyFilter($event)" [placeholder]="'todo.search' | transloco" #input>
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Filtre par priorité -->
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>{{'todo.filter.priority' | transloco}}</mat-label>
+                    <mat-select (selectionChange)="filterByPriority($event.value)" multiple>
+                        <mat-option *ngFor="let priority of priorities" [value]="priority">
+                            {{priority}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Filtre par label -->
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>{{'todo.filter.label' | transloco}}</mat-label>
+                    <mat-select (selectionChange)="filterByLabels($event.value)" multiple>
+                        <mat-option *ngFor="let label of labels" [value]="label">
+                            {{label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Filtre par personne assignée -->
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>{{'todo.filter.assignedTo' | transloco}}</mat-label>
+                    <mat-select (selectionChange)="filterByPerson($event.value)" multiple>
+                        <mat-option *ngFor="let person of assignedPersons$ | async" [value]="person.id">
+                            <div class="flex items-center gap-2">
+                                <span>{{person.name}}</span>
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
+        </div>
 
-            <button mat-raised-button color="primary" (click)="openAddModal()" 
-                    class="bg-indigo-600 hover:bg-indigo-700">
-                <mat-icon>add</mat-icon>
-                {{ 'todo.addButton' | transloco }}
+        <!-- Boutons d'export -->
+        <div class="flex flex-col sm:flex-row justify-end gap-4 mt-4">
+            <button mat-stroked-button (click)="exportToExcel()"
+                    class="w-full sm:w-auto border border-green-600 text-green-600 hover:bg-green-50">
+                <mat-icon class="mr-2">table_view</mat-icon>
+                {{ 'todo.export.excel' | transloco }}
+            </button>
+            <button mat-stroked-button (click)="exportToPDF()"
+                    class="w-full sm:w-auto border border-red-600 text-red-600 hover:bg-red-50">
+                <mat-icon class="mr-2">picture_as_pdf</mat-icon>
+                {{ 'todo.export.pdf' | transloco }}
             </button>
         </div>
     </div>
 
-    <h3 class="text-2xl font-bold text-gray-900 mb-4">
-        {{'todo.title' | transloco}}</h3>
     <!-- tableau pour Desktop -->
     <div class="hidden md:block mb-16">
         <div class="overflow-x-auto bg-white rounded-lg shadow">
@@ -151,16 +190,16 @@
     </div>
 
     <!-- cards pour mobile -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden pb-20">
+    <div class="grid grid-cols-1 gap-4 md:hidden pb-20">
         <mat-card *ngFor="let todo of dataSource.filteredData" 
-                  class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-100">
-            <mat-card-content class="p-6">
+                  class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+            <mat-card-content class="p-4">
                 <!-- En-tête de la carte -->
                 <div class="flex justify-between items-start mb-4">
                     <div class="space-y-2">
                         <h4 class="text-lg font-medium text-gray-900">{{todo.title}}</h4>
                         <div class="inline-flex items-center px-2.5 py-1 rounded-full text-sm"
-                             [ngClass]="todo.completed ? 'bg-blue-50 text-blue-700' : 'bg-gray-50 text-gray-700'">
+                             [ngClass]="todo.completed ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'">
                             <span class="flex items-center gap-1">
                                 <mat-icon class="text-sm">{{todo.completed ? 'check_circle' : 'schedule'}}</mat-icon>
                                 {{ todo.completed ? ('todo.status.completed' | transloco) : ('todo.status.inProgress' | transloco) }}
@@ -171,61 +210,72 @@
                             class="text-gray-400 hover:text-gray-600">
                         <mat-icon>more_vert</mat-icon>
                     </button>
+                    <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openDetailModal(todo.id)" class="menu-item">
+                        <mat-icon style="color: #2563eb">visibility</mat-icon>
+                        <span style="color: #1d4ed8">{{ 'todo.actions.detail' | transloco }}</span>
+                    </button>
+                    
+                    <button mat-menu-item (click)="openAddModal(todo)" class="menu-item">
+                        <mat-icon style="color: #4f46e5">edit</mat-icon>
+                        <span style="color: #4338ca">{{ 'todo.actions.edit' | transloco }}</span>
+                    </button>
+                    
+                    <button mat-menu-item (click)="onComplete(todo)" class="menu-item">
+                        <mat-icon [style.color]="todo.completed ? '#dc2626' : '#16a34a'">
+                            {{todo.completed ? 'restart_alt' : 'check_circle'}}
+                        </mat-icon>
+                        <span [style.color]="todo.completed ? '#b91c1c' : '#15803d'">
+                            {{todo.completed ? ('todo.actions.reopen' | transloco) : ('todo.actions.complete' | transloco)}}
+                        </span>
+                    </button>
+                    
+                    <button mat-menu-item (click)="onDelete(todo.id)" class="menu-item">
+                        <mat-icon style="color: #dc2626">delete</mat-icon>
+                        <span style="color: #b91c1c">{{ 'todo.actions.delete' | transloco }}</span>
+                    </button>
+                </mat-menu>
                 </div>
 
-                <!-- Informations -->
-                <div class="space-y-4">
-                    <!-- Labels -->
-                    <div class="flex flex-wrap gap-2">
-                        <span *ngFor="let label of todo.labels" 
-                              class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700">
-                            {{label}}
-                        </span>
-                    </div>
+                <!-- Labels -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span *ngFor="let label of todo.labels" 
+                          class="px-2.5 py-1 text-xs font-medium rounded-full"
+                          [ngClass]="{
+                            'bg-blue-100 text-blue-800': label === 'HTML',
+                            'bg-purple-100 text-purple-800': label === 'CSS',
+                            'bg-green-100 text-green-800': label === 'NODE JS',
+                            'bg-yellow-100 text-yellow-800': label === 'JQUERY'
+                          }">
+                        {{label}}
+                    </span>
+                </div>
 
-                    <!-- Personne assignée -->
-                    <div class="flex items-center gap-3 pt-2 border-t border-gray-100">
+                <!-- Priorité -->
+                <div class="flex items-center gap-2 mb-4">
+                    <mat-icon [ngClass]="{
+                        'text-red-500': todo.priority === 'Difficile',
+                        'text-yellow-500': todo.priority === 'Moyen',
+                        'text-green-500': todo.priority === 'Facile'
+                    }">flag</mat-icon>
+                    <span class="text-sm font-medium text-gray-700">{{todo.priority}}</span>
+                </div>
+
+                <!-- Personne assignée et date -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
                             <span class="text-gray-700 font-medium">
                                 {{todo.person?.name?.charAt(0)}}
                             </span>
                         </div>
                         <div class="text-sm">
-                            <p class="text-gray-900">{{todo.person?.name}}</p>
-                            <p class="text-gray-500 text-xs">{{todo.startDate | date:'shortDate'}}</p>
+                            <p class="text-gray-900 font-medium">{{todo.person?.name}}</p>
+                            <p class="text-gray-500">{{todo.startDate | date:'mediumDate'}}</p>
                         </div>
                     </div>
                 </div>
             </mat-card-content>
-
-            <!-- Menu d'actions -->
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openDetailModal(todo.id)" class="menu-item">
-                    <mat-icon class="text-gray-600">visibility</mat-icon>
-                    <span class="text-gray-700">{{ 'todo.actions.detail' | transloco }}</span>
-                </button>
-                
-                <button mat-menu-item (click)="onUpdate(todo)" class="menu-item">
-                    <mat-icon class="text-gray-600">edit</mat-icon>
-                    <span class="text-gray-700">{{ 'todo.actions.edit' | transloco }}</span>
-                </button>
-                
-                <button mat-menu-item (click)="onComplete(todo)" class="menu-item">
-                    <mat-icon class="text-gray-600">
-                        {{todo.completed ? 'restart_alt' : 'check_circle'}}
-                    </mat-icon>
-                    <span class="text-gray-700">
-                        {{todo.completed ? ('todo.actions.reopen' | transloco) : ('todo.actions.complete' | transloco)}}
-                    </span>
-                </button>
-                
-                <mat-divider></mat-divider>
-                
-                <button mat-menu-item (click)="onDelete(todo.id)" class="menu-item">
-                    <mat-icon class="text-gray-600">delete</mat-icon>
-                    <span class="text-gray-700">{{ 'todo.actions.delete' | transloco }}</span>
-                </button>
-            </mat-menu>
         </mat-card>
     </div>
 </div>

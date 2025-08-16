@@ -86,8 +86,15 @@ export class TodoListComponent implements OnInit {
   filteredPersons$!: Observable<Person[]>;
   persons: Person[] = [];
 
+  assignedPersons$!: Observable<Person[]>;
+  selectedPersonIds: number[] = [];
+
   isEditing = false;
   currentTodoId?: number;
+
+  selectedPriorities: Priority[] = [];
+  selectedLabels: Label[] = [];
+  private originalData: Todo[] = [];
 
   constructor() {
     this.todoForm = this.fb.group({
@@ -109,14 +116,29 @@ export class TodoListComponent implements OnInit {
         return name ? this._filterPersons(name) : this.persons.slice();
       })
     );
+
+    // Récupérer les personnes assignées uniques
+    this.assignedPersons$ = this.todos$.pipe(
+      map(todos => {
+        const uniquePersons = new Map();
+        todos.forEach(todo => {
+          if (todo.person) {
+            uniquePersons.set(todo.person.id, todo.person);
+          }
+        });
+        return Array.from(uniquePersons.values());
+      })
+    );
   }
 
   ngOnInit(): void {
     this.loadTodos();
     this.todos$.subscribe(todos => {
+      this.originalData = todos;
       this.dataSource = new MatTableDataSource(todos);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.setupCustomFilter();
     });
 
     // Charger la liste des personnes
@@ -161,17 +183,47 @@ export class TodoListComponent implements OnInit {
     this.todoService.updateTodo(updatedTodo).subscribe();
   }
 
-  onDetail(todo: Todo): void {
-    // Implement navigation to detail view
-    console.log('Navigate to todo detail', todo);
-  }
-
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       console.log(`Sorted ${sortState.direction}ending`);
     } else {
       console.log('Sorting cleared');
     }
+  }
+
+  filterByPerson(personIds: number[]): void {
+    this.selectedPersonIds = personIds;
+    this.applyFilters();
+  }
+
+  private setupCustomFilter() {
+    this.dataSource.filterPredicate = (data: Todo, filter: string) => {
+      const searchStr = filter.toLowerCase();
+      const matchesSearch = data.title.toLowerCase().includes(searchStr) ||
+                          data.description?.toLowerCase().includes(searchStr) ||
+                          data.person?.name.toLowerCase().includes(searchStr);
+
+      const matchesPriority = this.selectedPriorities.length === 0 ||
+                             this.selectedPriorities.includes(data.priority);
+
+      const matchesLabels = this.selectedLabels.length === 0 ||
+                           this.selectedLabels.some(label => data.labels.includes(label));
+
+      const matchesPerson = this.selectedPersonIds.length === 0 ||
+                           (data.person && this.selectedPersonIds.includes(data.person.id));
+
+      return matchesSearch && matchesPriority && matchesLabels && matchesPerson;
+    };
+  }
+
+  filterByPriority(priorities: Priority[]): void {
+    this.selectedPriorities = priorities;
+    this.applyFilters();
+  }
+
+  filterByLabels(labels: Label[]): void {
+    this.selectedLabels = labels;
+    this.applyFilters();
   }
 
   applyFilter(event: Event) {
@@ -181,6 +233,11 @@ export class TodoListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  private applyFilters(): void {
+    // Déclenche le filterPredicate avec la valeur de filtre actuelle
+    this.dataSource.filter = this.dataSource.filter || ' ';
   }
 
   openAddModal(todo?: Todo): void {

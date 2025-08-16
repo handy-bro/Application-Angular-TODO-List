@@ -57,6 +57,11 @@
     "validation": {
       "titleRequired": "Le titre est requis",
       "startDateRequired": "La date de début est requise"
+    },
+    "filter":{
+      "priority": "Filtrer par priorité",
+      "label": "Filtrer par technologie",
+      "assignedTo": "Filtrer par personne assignée"
     }
   },
   "person": {

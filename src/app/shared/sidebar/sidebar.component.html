@@ -45,13 +45,13 @@
                         <!-- Langue Toggle -->
                         <div class="flex bg-white rounded-full p-1 shadow-inner border border-gray-100">
                             <button 
-                                class="lang-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-sm"
+                                class="lang-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-sm cursor-pointer"
                                 [ngClass]="{'bg-blue-500 text-white': activeLang === 'en', 'text-gray-600 hover:text-blue-600 hover:bg-blue-50': activeLang !== 'en'}"
                                 (click)="setLanguage('en')">
                                 🇺🇸 EN
                             </button>
                             <button 
-                                class="lang-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                                class="lang-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer"
                                 [ngClass]="{'bg-blue-500 text-white': activeLang === 'fr', 'text-gray-600 hover:text-blue-600 hover:bg-blue-50': activeLang !== 'fr'}"
                                 (click)="setLanguage('fr')">
                                 🇫🇷 FR
