@@ -110,7 +110,6 @@ todo-app/
 L'application supporte plusieurs langues :
 - 🇫🇷 Français
 - 🇬🇧 Anglais
-- 🇪🇸 Espagnol
 
 ## 🤝 Contribution
 
@@ -120,12 +119,8 @@ L'application supporte plusieurs langues :
 4. Push vers la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrez une Pull Request
 
-## 📝 License
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
-
 ## 📫 Contact
 
-Votre Nom - [@votretwitter](https://twitter.com/votretwitter) - email@example.com
+Handy Melong - handymelong237@gmail.com
 
-Lien du projet : [https://github.com/votre-username/todo-app](https://github.com/votre-username/todo-app)
+Lien du projet : [https://github.com/handy-bro/Application-Angular-TODO-List](https://github.com/handy-bro/Application-Angular-TODO-List)
