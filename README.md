@@ -25,8 +25,8 @@ Une application de gestion de tâches moderne construite avec Angular 19 et Mate
 
 1. Clonez le dépôt :
 ```bash
-git clone https://github.com/votre-username/todo-app.git
-cd todo-app
+git clone https://github.com/handy-bro/Application-Angular-TODO-List
+cd Application-Angular-TODO-List
 ```
 
 2. Installez les dépendances :
