@@ -11,5 +11,6 @@ export interface Todo {
   priority: Priority;
   labels: Label[];
   description: string;
-  completed: boolean
+  completed: boolean;
+  favorite: boolean;
 }

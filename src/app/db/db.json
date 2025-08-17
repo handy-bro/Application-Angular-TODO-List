@@ -57,7 +57,9 @@
         "email": "handymelong237@gmail.com",
         "phone": "+237656932636"
       },
-      "id": "1"
+      "id": "1",
+      "favorie": false,
+      "favorite": true
     },
     {
       "id": "2",
@@ -76,7 +78,9 @@
         "HTML"
       ],
       "description": "Mettre à jour la page d'accueil en utilisant TailwindCSS et Angular Material.",
-      "completed": false
+      "completed": false,
+      "favorie": true,
+      "favorite": true
     },
     {
       "id": "3",
@@ -94,7 +98,9 @@
         "NODE JS"
       ],
       "description": "Réduire le temps de réponse en ajoutant de la mise en cache.",
-      "completed": false
+      "completed": false,
+      "favorie": true,
+      "favorite": true
     },
     {
       "id": "4",
@@ -113,7 +119,8 @@
         "CSS"
       ],
       "description": "Permettre à l'utilisateur de filtrer les tâches selon les labels.",
-      "completed": false
+      "completed": false,
+      "favorie": true
     },
     {
       "id": "5",
@@ -133,7 +140,8 @@
         "JQUERY"
       ],
       "description": "Rendre l'application responsive sur les petits écrans.",
-      "completed": false
+      "completed": false,
+      "favorie": true
     },
     {
       "id": "6",
@@ -151,7 +159,8 @@
         "HTML"
       ],
       "description": "Rédiger la documentation pour l'équipe de maintenance.",
-      "completed": false
+      "completed": false,
+      "favorie": true
     },
     {
       "id": "7",
@@ -169,7 +178,8 @@
         "NODE JS"
       ],
       "description": "Écrire et exécuter des tests unitaires pour garantir la fiabilité du code.",
-      "completed": false
+      "completed": false,
+      "favorie": true
     },
     {
       "id": "8",
@@ -188,7 +198,8 @@
         "name": "Clarisse Tchouamo",
         "email": "clarisse.tchouamo@example.com",
         "phone": "+237677445566"
-      }
+      },
+      "favorie": true
     }
   ]
 }

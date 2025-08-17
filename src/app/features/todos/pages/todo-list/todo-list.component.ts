@@ -67,7 +67,7 @@ export class TodoListComponent implements OnInit {
   private readonly todoService = inject(TodoService);
   todos$: Observable<Todo[]> = this.todoService.todos$;
   
-  displayedColumns: string[] = ['id', 'title','labels', 'completed', 'actions',];
+  displayedColumns: string[] = ['id', 'title','labels', 'favorie', 'completed', 'actions',];
   searchText: string = '';
 
   dataSource!: MatTableDataSource<Todo>;
@@ -379,6 +379,13 @@ export class TodoListComponent implements OnInit {
 
     const fileName = `liste-des-tâches-${new Date().toISOString().split('T')[0]}.pdf`;
     doc.save(fileName);
+  }
+  onStar(todo: Todo): void {
+    const updatedTodo = {
+      ...todo,
+      favorite: !todo.favorite,
+    };
+    this.todoService.updateTodo(updatedTodo).subscribe();
   }
 }
 
